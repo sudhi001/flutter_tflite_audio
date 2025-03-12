@@ -28,6 +28,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 31
+    namespace 'flutter.tflite_audio'
 
     defaultConfig {
         ndk {
