@@ -256,10 +256,10 @@ public class TfliteAudioPlugin implements MethodCallHandler, StreamHandler, Flut
         }
 
     }
-   public String getAssetLookupKey(Context context, String modelPath) {
+   public String getAssetLookupKey( String modelPath) {
         FlutterLoader flutterLoader = new FlutterLoader();
-        flutterLoader.startInitialization(context);
-        flutterLoader.ensureInitializationComplete(context, null);
+        flutterLoader.startInitialization(applicationContext);
+        flutterLoader.ensureInitializationComplete(applicationContext, null);
         return flutterLoader.getLookupKeyForAsset(modelPath);
     }
     private int determineInput(HashMap arguments) {
@@ -322,7 +322,7 @@ public class TfliteAudioPlugin implements MethodCallHandler, StreamHandler, Flut
 
         try {
             if (isAsset) {
-                key = getAssetLookupKey(context,modelPath);
+                key = getAssetLookupKey(modelPath);
                 AssetFileDescriptor fileDescriptor = assetManager.openFd(key);
                 FileInputStream inputStream = new FileInputStream(fileDescriptor.getFileDescriptor());
                 FileChannel fileChannel = inputStream.getChannel();
@@ -352,7 +352,7 @@ public class TfliteAudioPlugin implements MethodCallHandler, StreamHandler, Flut
 
         if (labelPath.length() > 0) {
             if (isAsset) {
-                key = getAssetLookupKey(context,labelPath);
+                key = getAssetLookupKey(labelPath);
                 loadLabels(assetManager, key);
             } else {
                 loadLabels(null, labelPath);
@@ -511,7 +511,7 @@ public class TfliteAudioPlugin implements MethodCallHandler, StreamHandler, Flut
         try {
             if (isAsset) {
                 // Get exact location of the file in the asssets folder.
-                String key = getAssetLookupKey(context,audioDirectory);
+                String key = getAssetLookupKey(audioDirectory);
                 fileDescriptor = assetManager.openFd(key);
                 startOffset = fileDescriptor.getStartOffset();
                 declaredLength = fileDescriptor.getDeclaredLength();
