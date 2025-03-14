@@ -256,7 +256,12 @@ public class TfliteAudioPlugin implements MethodCallHandler, StreamHandler, Flut
         }
 
     }
-
+   public String getAssetLookupKey(Context context, String modelPath) {
+        FlutterLoader flutterLoader = new FlutterLoader();
+        flutterLoader.startInitialization(context);
+        flutterLoader.ensureInitializationComplete(context, null);
+        return flutterLoader.getLookupKeyForAsset(modelPath);
+    }
     private int determineInput(HashMap arguments) {
 
         int audioLength = (int) arguments.get("audioLength");
@@ -317,10 +322,7 @@ public class TfliteAudioPlugin implements MethodCallHandler, StreamHandler, Flut
 
         try {
             if (isAsset) {
-                FlutterLoader flutterLoader = new FlutterLoader();
-                flutterLoader.startInitialization(context);
-                flutterLoader.ensureInitializationComplete(context, null)
-                key = flutterLoader.getLookupKeyForAsset(modelPath);
+                key = getAssetLookupKey(context,modelPath);
                 AssetFileDescriptor fileDescriptor = assetManager.openFd(key);
                 FileInputStream inputStream = new FileInputStream(fileDescriptor.getFileDescriptor());
                 FileChannel fileChannel = inputStream.getChannel();
@@ -350,10 +352,7 @@ public class TfliteAudioPlugin implements MethodCallHandler, StreamHandler, Flut
 
         if (labelPath.length() > 0) {
             if (isAsset) {
-                FlutterLoader flutterLoader = new FlutterLoader();
-                flutterLoader.startInitialization(context);
-                flutterLoader.ensureInitializationComplete(context, null)
-                key = flutterLoader.getLookupKeyForAsset(labelPath);
+                key = getAssetLookupKey(context,labelPath);
                 loadLabels(assetManager, key);
             } else {
                 loadLabels(null, labelPath);
@@ -512,10 +511,7 @@ public class TfliteAudioPlugin implements MethodCallHandler, StreamHandler, Flut
         try {
             if (isAsset) {
                 // Get exact location of the file in the asssets folder.
-                    FlutterLoader flutterLoader = new FlutterLoader();
-                flutterLoader.startInitialization(context);
-                flutterLoader.ensureInitializationComplete(context, null)
-                String key = flutterLoader.getLookupKeyForAsset(audioDirectory);
+                String key = getAssetLookupKey(context,audioDirectory);
                 fileDescriptor = assetManager.openFd(key);
                 startOffset = fileDescriptor.getStartOffset();
                 declaredLength = fileDescriptor.getDeclaredLength();
