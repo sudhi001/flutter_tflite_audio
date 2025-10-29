@@ -1,7 +1,7 @@
 name: tflite_audio
 maintainer: Michael Nguyen
 description: Audio classification Tflite package for flutter (iOS & Android). Supports 16KB page sizes for Android 15+. 
-version: 0.4.1
+version: 0.4.2
 homepage: https://github.com/Caldarie/flutter_tflite_audio
 
 environment:
