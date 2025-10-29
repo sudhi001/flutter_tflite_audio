@@ -18,7 +18,7 @@ import android.os.Handler;
 import androidx.core.app.ActivityCompat;
 import androidx.annotation.NonNull;
 
-import com.google.ai.edge.litert.Interpreter;
+import org.tensorflow.lite.Interpreter;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
